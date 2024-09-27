@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${FRONT}_img
+    container_name: ${FRONT}_ctn
+    env_file:
+      - .env
+    ports:
+      - "${FRONT_PORT}:${FRONT_PORT}"
+    volumes:
+      - .:/app
+    restart: unless-stopped
