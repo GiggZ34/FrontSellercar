@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { ParamsService} from "./params.service";
@@ -11,7 +11,17 @@ export type queryParams = { [param: string]: string | number | boolean | Readonl
 
 export class ApiManagementService {
 
+  private _token: string | null = null;
+
   constructor(private _http: HttpClient, private paramsService: ParamsService) { }
+
+  setToken(token: string) {
+    this._token = token;
+  }
+
+  getToken() {
+    return this._token;
+  }
 
   async get<T>(path: string,
                options: {
@@ -21,11 +31,16 @@ export class ApiManagementService {
                  force?: boolean
                } = {}): Promise<T | undefined> {
 
+    const headers = new HttpHeaders({
+      ...(options.call_without_token ? {} : { Authorization: `Token ${this._token}` })
+    });
+
     return lastValueFrom(
       this._http.get<HttpResponse<T>>(
         this.paramsService.url_api + path,
         {
           withCredentials: true,
+          headers:headers,
           params: options.params
         }
       )
