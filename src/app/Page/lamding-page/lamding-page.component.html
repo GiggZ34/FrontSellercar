@@ -7,21 +7,21 @@
           <input type="text"
                  class="login__input"
                  placeholder="User name / Email"
-                 [formControl]="email"
-                 (blur)="updateErrorMessage()">
+                 [formControl]="email">
         </div>
         <div class="login__field">
           <i class="login__icon fas fa-lock"></i>
           <input type="password"
                  class="login__input"
                  placeholder="Password"
-                 [formControl]="password"
-                 (blur)="updateErrorMessage()">
+                 [formControl]="password">
         </div>
         <button class="button login__submit" (click)="sendLogin()">
           <span class="button__text">Log In Now</span>
           <i class="button__icon fas fa-chevron-right"></i>
         </button>
+          <p class="error-msg">{{errorMsg}}</p>
+
       </form>
     </div>
     <div class="screen__background">

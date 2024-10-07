@@ -1,15 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ApiManagementService} from "../../Services/api-management.service";
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {merge} from "rxjs";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
-import {stringify} from "node:querystring";
 
 interface User{
   token: string,
@@ -44,25 +41,20 @@ export class LamdingPageComponent  {
        "username": this.email.value,
        'password': this.password.value
      }
-     this.testFunc(body).then((data:User | undefined)=>{
+     this.logFunc(body).then((data:User | undefined)=>{
 
        if (data){
          localStorage.setItem('token',data.token)
-         if(data.token){
-            this.router.navigate(['accueil']);
-         }else{
-           this.errorMsg = "erreur lors de la connection, veuillez réessayer"
-           console.log(data)
-         }
+         this.router.navigate(['accueil']);
        }
      })
        .catch((error)=>{
-       console.log(error)
+         this.errorMsg = "erreur lors de la connection, veuillez réessayer"
+         console.log(error)
      })
   }
 
-  async testFunc(body:any):Promise<User | undefined>{
-
+  async logFunc(body:any):Promise<User | undefined>{
    return await this.request.post("api/login/", body)
   }
 }
