@@ -8,6 +8,8 @@ import {merge} from "rxjs";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
+import {Router} from "@angular/router";
+import {stringify} from "node:querystring";
 
 interface User{
   token: string,
@@ -31,23 +33,9 @@ interface User{
 export class LamdingPageComponent  {
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required, Validators.email]);
+  public errorMsg:String = ""
 
-  errorMessage = signal('');
-
-  constructor(private request: ApiManagementService) {
-    merge(this.email.statusChanges, this.email.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
-  }
-
-  updateErrorMessage() {
-    if (this.email.hasError('required')) {
-      this.errorMessage.set('You must enter a value');
-    } else if (this.email.hasError('email')) {
-      this.errorMessage.set('Not a valid email');
-    } else {
-      this.errorMessage.set('');
-    }
+  constructor(private request: ApiManagementService, private router: Router) {
   }
 
    sendLogin() {
@@ -56,13 +44,16 @@ export class LamdingPageComponent  {
        "username": this.email.value,
        'password': this.password.value
      }
-     console.log('toto')
      this.testFunc(body).then((data:User | undefined)=>{
 
        if (data){
-         console.log(data.token)
-
          localStorage.setItem('token',data.token)
+         if(data.token){
+            this.router.navigate(['accueil']);
+         }else{
+           this.errorMsg = "erreur lors de la connection, veuillez réessayer"
+           console.log(data)
+         }
        }
      })
        .catch((error)=>{
