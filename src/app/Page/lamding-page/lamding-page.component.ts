@@ -1,13 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ApiManagementService} from "../../Services/api-management.service";
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {merge} from "rxjs";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
+import {Router} from "@angular/router";
 
 interface User{
   token: string,
@@ -31,23 +30,9 @@ interface User{
 export class LamdingPageComponent  {
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required, Validators.email]);
+  public errorMsg:String = ""
 
-  errorMessage = signal('');
-
-  constructor(private request: ApiManagementService) {
-    merge(this.email.statusChanges, this.email.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
-  }
-
-  updateErrorMessage() {
-    if (this.email.hasError('required')) {
-      this.errorMessage.set('You must enter a value');
-    } else if (this.email.hasError('email')) {
-      this.errorMessage.set('Not a valid email');
-    } else {
-      this.errorMessage.set('');
-    }
+  constructor(private request: ApiManagementService, private router: Router) {
   }
 
    sendLogin() {
@@ -56,22 +41,20 @@ export class LamdingPageComponent  {
        "username": this.email.value,
        'password': this.password.value
      }
-     console.log('toto')
-     this.testFunc(body).then((data:User | undefined)=>{
+     this.logFunc(body).then((data:User | undefined)=>{
 
        if (data){
-         console.log(data.token)
-
          localStorage.setItem('token',data.token)
+         this.router.navigate(['accueil']);
        }
      })
        .catch((error)=>{
-       console.log(error)
+         this.errorMsg = "erreur lors de la connection, veuillez réessayer"
+         console.log(error)
      })
   }
 
-  async testFunc(body:any):Promise<User | undefined>{
-
+  async logFunc(body:any):Promise<User | undefined>{
    return await this.request.post("api/login/", body)
   }
 }
