@@ -7,5 +7,5 @@ export class ParamsService {
 
   constructor() { }
 
-  url_api = "http://localhost:9000/"
+  url_api = "http://localhost:3200/"
 }

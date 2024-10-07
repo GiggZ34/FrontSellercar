@@ -1,1 +1,25 @@
-<p>lamding-page works!</p>
+<form  class="example-container">
+  <mat-form-field>
+    <mat-label>Enter your email</mat-label>
+    <input
+      matInput
+      placeholder="pat@example.com"
+      [formControl]="email"
+      (blur)="updateErrorMessage()"
+      required
+    />
+    <input
+      matInput
+      placeholder="*********"
+      [formControl]="password"
+      (blur)="updateErrorMessage()"
+      required
+    />
+    <button (click)="sendLogin()">Entrer</button>
+    <ng-container *ngIf="email.invalid">
+      <mat-error>
+        {{errorMessage()}}
+        </mat-error>
+    </ng-container>
+  </mat-form-field>
+</form>
