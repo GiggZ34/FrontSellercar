@@ -1,0 +1,35 @@
+.car-details-container {
+  background-color: white;
+  color: black;
+  border: 1px solid #6C63AC;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.car-model{
+  display: flex;
+  text-align: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.car-model h2 {
+  color: #6C63AC;
+  font-size: 1.5em;
+}
+
+.customer-info, .options, .seller-info {
+  margin-top: 20px;
+}
+
+.customer-info h3, .options h3, .seller-info h3 {
+  color: #6C63AC;
+  font-size: 1.2em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}

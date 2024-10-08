@@ -45,6 +45,8 @@ export class LamdingPageComponent  {
 
        if (data){
          localStorage.setItem('token',data.token)
+         localStorage.setItem('user',JSON.stringify(data.user));
+         this.request.setToken(data.token);
          this.router.navigate(['accueil']);
        }
      })

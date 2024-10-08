@@ -1,0 +1,121 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+}
+
+//SEARCH BAR
+
+.search {
+  &__container {
+    width: 60%;
+    margin-left: 10px;
+    height:20%;
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #5C5696;
+  }
+
+  &__input {
+    width: 40%;
+
+    padding: 12px 0;
+    outline: 0;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #575756;
+    border-radius: 0;
+    background-position: 100% center;
+
+    &::placeholder {
+      color: color(#575756 a(0.8));
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+  }
+
+}
+
+
+.inputBlock{
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchButton{
+  padding: 1px 10px;
+  background:  #5C5696;
+  border: 1px solid;
+  color: white;
+  border-radius: 10px;
+  margin-left:4px ;
+  cursor: pointer;
+  transition: transform 200ms ease-in-out;
+}
+
+.searchButton:hover{
+  transform: scale(1.05);
+}
+
+.blockFindUser{
+  margin-top: 20px;
+  display: flex;
+  width: fit-content;
+  gap:5px;
+  border: gray solid 1px;
+  border-radius:8px;
+  padding: 8px 10px;
+  transition: transform 200ms ease-in-out;
+  cursor: pointer;
+}
+
+
+.blockFindUser:hover{
+  transform: scale(1.05);
+}
+
+.blocClick{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height:80%;
+}
+
+.blockSell{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 40%;
+  height:80%;
+  background: rgba(92, 86, 150, 0.64);
+  cursor: pointer;
+  border-radius: 14px;
+  transition: transform 200ms ease-in-out;
+}
+
+.opacity-purple{
+  background: rgba(74, 71, 107, 0.58);
+
+}
+
+.blockSell:hover{
+  transform: scale(1.02);
+}
+
+.blockTitle{
+  color:white;
+}
+
+.imgBlock{
+  width: 75%;
+  object-fit: cover;
+}
+
