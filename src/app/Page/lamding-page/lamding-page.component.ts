@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {ApiManagementService} from "../../Services/api-management.service";
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
-import {NgIf} from "@angular/common";
+import {DOCUMENT, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 
 interface User{
@@ -31,8 +31,12 @@ export class LamdingPageComponent  {
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required, Validators.email]);
   public errorMsg:String = ""
+  private localstorage: Storage | undefined;
 
-  constructor(private request: ApiManagementService, private router: Router) {
+  constructor(@Inject(DOCUMENT) private document: Document,
+              private request: ApiManagementService,
+              private router: Router) {
+  this.localstorage = document.defaultView?.localStorage;
   }
 
    sendLogin() {
@@ -44,9 +48,11 @@ export class LamdingPageComponent  {
      this.logFunc(body).then((data:User | undefined)=>{
 
        if (data){
-         localStorage.setItem('token',data.token)
+         if (this.localstorage) {
+         this.localstorage.setItem('token',data.token)
          this.request.setToken(data.token);
          this.router.navigate(['accueil']);
+         }
        }
      })
        .catch((error)=>{

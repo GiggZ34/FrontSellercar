@@ -11,11 +11,12 @@ export type queryParams = { [param: string]: string | number | boolean | Readonl
 
 export class ApiManagementService {
 
-  private _token: string | null = null;
+  private _token: String | null = null;
 
-  constructor(private _http: HttpClient, private paramsService: ParamsService) { }
+  constructor(private _http: HttpClient, private paramsService: ParamsService) {
+  }
 
-  setToken(token: string) {
+  setToken(token: String | null) {
     this._token = token;
   }
 
