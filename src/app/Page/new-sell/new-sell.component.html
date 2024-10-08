@@ -1,0 +1,21 @@
+<form [formGroup]="sellForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="carModel">
+    <mat-label>Modèle de Voiture</mat-label>
+    <input matInput formControlName="carModel">
+  </mat-form-field>
+
+  <mat-form-field class="customer">
+    <mat-label>Client</mat-label>
+    <input matInput formControlName="customer">
+  </mat-form-field>
+
+  <mat-form-field class="option">
+    <mat-label>Option</mat-label>
+    <mat-select formControlName="option">
+      <mat-option value="option1">Option 1</mat-option>
+      <mat-option value="option2">Option 2</mat-option>
+      <mat-option value="option3">Option 3</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-button mat-stroked-button type="submit">Ajouter</button>
+</form>
