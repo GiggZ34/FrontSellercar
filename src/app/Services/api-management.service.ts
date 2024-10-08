@@ -13,7 +13,16 @@ export class ApiManagementService {
 
   private _token: String | null = null;
 
-  constructor(private _http: HttpClient, private paramsService: ParamsService) { }
+  constructor(private _http: HttpClient, private paramsService: ParamsService) {
+  }
+
+  setToken(token: String | null) {
+    this._token = token;
+  }
+
+  getToken() {
+    return this._token;
+  }
 
   setToken(token: String | null) {
     if(!token){
