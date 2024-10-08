@@ -1,6 +1,6 @@
 .container{
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 10px);
 }
 
 //SEARCH BAR
@@ -9,11 +9,12 @@
   &__container {
     width: 60%;
     margin-left: 10px;
+    margin-top: 10px;
     height:20%;
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
   }
 
   &__title {
@@ -67,9 +68,8 @@
   margin-top: 20px;
   display: flex;
   width: fit-content;
+  border-bottom: gray solid 1px;
   gap:5px;
-  border: gray solid 1px;
-  border-radius:8px;
   padding: 8px 10px;
   transition: transform 200ms ease-in-out;
   cursor: pointer;
@@ -77,7 +77,15 @@
 
 
 .blockFindUser:hover{
-  transform: scale(1.05);
+  transform: translateX(5px);
+}
+
+.blockFindUserError{
+  margin-top: 20px;
+  display: flex;
+  width: fit-content;
+  padding: 8px 10px;
+  border-bottom: 1px solid red;
 }
 
 .blocClick{
@@ -119,3 +127,6 @@
   object-fit: cover;
 }
 
+.text-error{
+  color:red;
+}

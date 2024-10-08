@@ -33,3 +33,23 @@ ul {
   list-style: none;
   padding: 0;
 }
+
+.blockUser{
+  display: flex;
+  justify-content: space-between;
+}
+
+.imgBlocOpt{
+  width: 40%;
+}
+
+.clickable{
+  text-decoration: underline;
+  text-underline: #6C63AC;
+  cursor: pointer;
+}
+
+.clickable:hover{
+  text-underline:  #6C63AC;
+  color:  #6C63AC;
+}

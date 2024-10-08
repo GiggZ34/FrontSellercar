@@ -9,10 +9,17 @@
         <button class="searchButton" (click)="searchUser()">Search</button>
       </div>
 
-        <div (click)="redirectSellerWithId()" *ngIf="searchedUserResult" class="blockFindUser">
+        <div (click)="redirectCustomerWithId(searchedUserResult.first_name)" *ngIf="searchedUserResult" class="blockFindUser">
           <p>{{searchedUserResult.last_name}}</p>
           <p >{{searchedUserResult.first_name}}</p>
+          <p>➡️</p>
         </div>
+
+      @if(errorMsg !== ""){
+        <div class="blockFindUserError">
+          <p class="text-error">{{errorMsg}}</p>
+        </div>
+      }
 
     </div>
 

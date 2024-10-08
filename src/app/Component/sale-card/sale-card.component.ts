@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgForOf} from "@angular/common";
 import {AllSale} from "../../Page/sale-page/sale_page.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sale-card',
@@ -15,5 +16,13 @@ import {AllSale} from "../../Page/sale-page/sale_page.service";
 })
 export class SaleCardComponent {
 
+  constructor(private router: Router) {
+  }
+
   @Input() sale: AllSale | undefined;
+
+  redirectLink(route : string, user : string){
+    console.log('toto')
+    this.router.navigate([`all-sale/${route}/${user}`]);
+  }
 }

@@ -14,18 +14,16 @@ import {NgIf} from "@angular/common";
   templateUrl: './accueil-page.component.html',
   styleUrl: './accueil-page.component.scss'
 })
-export class AccueilPageComponent implements OnInit {
+export class AccueilPageComponent {
 
   public searchedUserResult: SearchedUser | undefined;
+  public errorMsg:string="";
+
   constructor(private router: Router, private functionService: AccueilService) {
   }
 
   readonly firstName = new FormControl(null);
   readonly lastName = new FormControl(null);
-
-  ngOnInit(): void {
-
-  }
 
   async searchUser(){
 
@@ -33,15 +31,23 @@ export class AccueilPageComponent implements OnInit {
       if (!data) {
         return
       }
+
+      if(data.length<1){
+        this.errorMsg="No user found";
+        return
+      }
+
+      this.errorMsg="";
       this.searchedUserResult = data[0];
     })
       .catch((error)=>{
+        this.errorMsg="Error : " + error.error.detail;
         console.log(error)
       })
   }
 
-  redirectSellerWithId(){
-    this.router.navigate(['']);
+  redirectCustomerWithId(firstName : String){
+    this.router.navigate([`all-sale/customer/${firstName}`]);
   }
 
   redirectToSeller(){

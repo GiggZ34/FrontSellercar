@@ -12,7 +12,12 @@ export interface SearchedUser {
 })
 export class AccueilService {
 
-  constructor(private request: ApiManagementService) { }
+  private readonly token :String | null=null;
+
+  constructor(private request: ApiManagementService) {
+    this.token = localStorage.getItem('token');
+    this.request.setToken(this.token)
+  }
 
   async findUserCall(firstName:String | null, lastName:String | null):Promise<SearchedUser[] | undefined>{
 

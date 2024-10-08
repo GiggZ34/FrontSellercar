@@ -13,8 +13,16 @@ export const routes: Routes = [
     component:AccueilPageComponent
   },
   {
-    path:'all-sale',
-    component:SalePageComponent
+    path: 'all-sale',
+    component: SalePageComponent
   },
+  {
+    path: 'all-sale/seller/:seller_firstName',
+    component: SalePageComponent
+  },
+  {
+    path: 'all-sale/customer/:customer_firstName',
+    component: SalePageComponent
+  }
 
 ];
