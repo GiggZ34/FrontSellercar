@@ -1,0 +1,57 @@
+@if(sale){
+  <div class="car-details-container">
+
+    <div class="car-model">
+      <h2>Sale number {{sale.id}}</h2>
+      <h2>{{ sale.carmodel.model }} - {{ sale.carmodel.price | currency: 'EUR' }}</h2>
+    </div>
+
+    <div class="blockUser">
+      <div class="customer-info">
+        <h3>Client</h3>
+        <p (click)="redirectLink('customer', sale.customer.first_name)">Nom : <span class="clickable" >{{ sale.customer.first_name }} {{ sale.customer.last_name }}</span></p>
+        <p>Date de naissance : {{ sale.customer.birthday | date: 'dd/MM/yyyy' }}</p>
+      </div>
+
+      <div class="seller-info">
+        <h3>Vendeur</h3>
+        <p (click)="redirectLink('seller', sale.seller.first_name)">Nom : <span class="clickable" >{{ sale.seller.first_name }} {{ sale.seller.last_name }}</span></p>
+        <p>Email : {{ sale.seller.username }}</p>
+        <p>Rôle : {{ sale.seller.roles }}</p>
+      </div>
+    </div>
+
+
+    <div class="blockUser">
+      <div class="options">
+        <h3>Options</h3>
+        <ul>
+          @if(sale.options.length < 1){
+            <p>No otpions</p>
+          }@else{
+            <li *ngFor="let option of sale.options">
+              {{ option.title }} : {{ option.price | currency: 'EUR' }}
+            </li>
+          }
+
+        </ul>
+      </div>
+
+      @if(sale.carmodel.model === "Model S"){
+        <img class="imgBlocOpt" src="model_s.png">
+      } @else if(sale.carmodel.model === "Cybertruck"){
+        <img class="imgBlocOpt" src="cybertruk.png">
+      }
+      @else if(sale.carmodel.model === "Model 3"){
+        <img class="imgBlocOpt" src="model_3.png">
+      }
+      @else if(sale.carmodel.model === "Model Y"){
+        <img class="imgBlocOpt" src="model_y.png">
+      }
+    </div>
+
+
+
+  </div>
+}
+

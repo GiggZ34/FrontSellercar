@@ -24,6 +24,17 @@ export class ApiManagementService {
     return this._token;
   }
 
+  setToken(token: String | null) {
+    if(!token){
+      return
+    }
+    this._token = token;
+  }
+
+  getToken() {
+    return this._token;
+  }
+
   async get<T>(path: string,
                options: {
                  params?: queryParams,

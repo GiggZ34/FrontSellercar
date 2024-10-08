@@ -49,9 +49,9 @@ export class LamdingPageComponent  {
 
        if (data){
          if (this.localstorage) {
-         this.localstorage.setItem('token',data.token)
-         this.request.setToken(data.token);
-         this.router.navigate(['accueil']);
+           this.localstorage.setItem('token',data.token)
+           this.request.setToken(data.token);
+           this.router.navigate(['accueil']);
          }
        }
      })
