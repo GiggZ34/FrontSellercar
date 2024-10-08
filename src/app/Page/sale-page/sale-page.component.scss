@@ -1,0 +1,22 @@
+.block-sale {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.sale-card {
+  flex: 1 1 calc(45% - 16px);
+  max-width: calc(45% - 16px);
+}
+
+@media (max-width: 768px) {
+  .sale-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+.title_allSale{
+  margin-left: 10%;
+}
