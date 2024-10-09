@@ -51,7 +51,7 @@ export class AccueilPageComponent {
   }
 
   redirectToSeller(){
-    this.router.navigate(['']);
+    this.router.navigate(['displaySeller']);
   }
 
   redirectToSale(){

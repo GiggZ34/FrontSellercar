@@ -17,14 +17,6 @@ export class ApiManagementService {
   }
 
   setToken(token: String | null) {
-    this._token = token;
-  }
-
-  getToken() {
-    return this._token;
-  }
-
-  setToken(token: String | null) {
     if(!token){
       return
     }
