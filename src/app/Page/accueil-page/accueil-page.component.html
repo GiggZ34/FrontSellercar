@@ -7,6 +7,7 @@
         <input [formControl]="firstName" class="search__input" type="text" placeholder="first name" >
         <input [formControl]="lastName" class="search__input" type="text" placeholder="last name" >
         <button class="searchButton" (click)="searchUser()">Search</button>
+        <button class="searchButton" (click)="openDialog()">Add new sale</button>
       </div>
 
         <div (click)="redirectCustomerWithId(searchedUserResult.first_name)" *ngIf="searchedUserResult" class="blockFindUser">
@@ -33,5 +34,7 @@
       <img class="imgBlock" src="seller_17627558.png">
     </div>
   </div>
+
+
 
 </div>

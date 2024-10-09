@@ -7,6 +7,7 @@ import {MatButton} from "@angular/material/button";
 import {Customers, InterCarmodels, InterNewSell, InterOptions} from "./inter-new-sell";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {NgForOf} from "@angular/common";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-new-sell',
@@ -30,7 +31,8 @@ export class NewSellComponent implements OnInit {
     customer: Customers[] = [];
     options: InterOptions[] = [];
 
-  constructor(private sell: FormBuilder,private newSellService: ServiceNewSellService) {
+  constructor(private sell: FormBuilder,private newSellService: ServiceNewSellService,
+              private dialogRef: MatDialogRef<NewSellComponent>  ) {
     this.sellForm = this.sell.group({
       carmodel: [],
       customer: [],
@@ -89,6 +91,7 @@ export class NewSellComponent implements OnInit {
       try {
         const response = await this.newSellService.FuncAddCars(formData);
         console.log(response);
+        this.dialogRef.close();
       } catch (error) {
         console.error(error);
       }
