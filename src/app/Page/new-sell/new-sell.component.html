@@ -1,21 +1,33 @@
-<form [formGroup]="sellForm" (ngSubmit)="onSubmit()">
-  <mat-form-field class="carModel">
-    <mat-label>Modèle de Voiture</mat-label>
-    <input matInput formControlName="carModel">
-  </mat-form-field>
+<div class="block-form">
+  <form [formGroup]="sellForm" (ngSubmit)="onSubmit()">
 
-  <mat-form-field class="customer">
-    <mat-label>Client</mat-label>
-    <input matInput formControlName="customer">
-  </mat-form-field>
+    <div class="form-field option">
+      <label for="carModel">Car Models</label>
+      <select id="carModel" formControlName="carmodel">
+        <option *ngFor="let model of carModels" [value]="model.id">{{ model.model }}</option>
+      </select>
+    </div>
 
-  <mat-form-field class="option">
-    <mat-label>Option</mat-label>
-    <mat-select formControlName="option">
-      <mat-option value="option1">Option 1</mat-option>
-      <mat-option value="option2">Option 2</mat-option>
-      <mat-option value="option3">Option 3</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button mat-button mat-stroked-button type="submit">Ajouter</button>
-</form>
+    <div class="form-field option">
+      <label for="customer">Customers</label>
+      <select id="customer" formControlName="customer">
+        <option *ngFor="let first_name of customer" [value]="first_name.id">{{ first_name.first_name }}</option>
+      </select>
+    </div>
+
+    <div class="form-field option">
+      <label>Options</label>
+      <div class="checkbox-group" formControlName="options">
+        <div *ngFor="let option of options">
+          <label>
+            <input type="checkbox" [value]="option.id" (change)="onOptionChange($event)" />
+            {{ option.title }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit">Valider</button>
+
+  </form>
+</div>

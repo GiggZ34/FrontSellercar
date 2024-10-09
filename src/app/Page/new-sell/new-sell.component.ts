@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {ServiceNewSellService} from "./service-new-sell.service";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
-import {InterNewSell} from "./inter-new-sell";
+import {Customers, InterCarmodels, InterNewSell, InterOptions} from "./inter-new-sell";
 import {MatOption, MatSelect} from "@angular/material/select";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-new-sell',
@@ -17,34 +18,101 @@ import {MatOption, MatSelect} from "@angular/material/select";
     ReactiveFormsModule,
     MatButton,
     MatSelect,
-    MatOption
+    MatOption,
+    NgForOf
   ],
   templateUrl: './new-sell.component.html',
   styleUrl: './new-sell.component.scss'
 })
 export class NewSellComponent implements OnInit {
-  sellForm = new FormGroup({
-    carModel: new FormControl('', [Validators.required]),
-    customer: new FormControl('', [Validators.required]),
-    option: new FormControl('')
-  });
+    sellForm : FormGroup;
+    carModels: InterCarmodels[] = [];
+    customer: Customers[] = [];
+    options: InterOptions[] = [];
 
-  constructor(private newSellService: ServiceNewSellService) {}
+  constructor(private sell: FormBuilder,private newSellService: ServiceNewSellService) {
+    this.sellForm = this.sell.group({
+      carmodel: [],
+      customer: [],
+      options: []
+    });
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
 
-    async onSubmit() {
-      const formData: InterNewSell = {
-        carModel: this.sellForm.value.carModel,
-        customer: this.sellForm.value.customer,
-        option: this.sellForm.value.option
-      };
+    this.loadCarModels().then();
+    this.loadOptions().then();
+    this.loadCustomers().then();
+  }
 
-      try {
-        const response = await this.newSellService.FuncAddCars(formData);
-        console.log('Réusssi', response);
-      } catch (error) {
-        console.error('Erreur', error);
+
+  async loadCarModels(){
+    try{
+      const models = await this.newSellService.FuncCarModels();
+      console.log(models)
+      if(models) {
+        console.log("toto")
+        this.carModels = models;
       }
+    } catch (error) {
+      console.log(error)
     }
   }
+
+  async loadOptions() {
+    try {
+      const options = await this.newSellService.FuncGetOption();
+      if (options) {
+        this.options = options;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async loadCustomers(){
+    try{
+      const customers = await this.newSellService.FuncGetCustomers();
+      if(customers){
+        this.customer = customers;
+      }
+    } catch (error){
+      console.error(error);
+    }
+  }
+
+  async onSubmit() {
+    console.log(this.sellForm.value);
+    if (this.sellForm.valid) {
+      const formData: InterNewSell = this.sellForm.value;
+      console.log(formData)
+      try {
+        const response = await this.newSellService.FuncAddCars(formData);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.log('pas valide');
+    }
+  }
+
+  // SELECTION MULTIPLE SUR SELECT OPTIONS
+
+  onOptionChange(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    const options: string[] = this.sellForm.get('options')?.value || [];
+
+    if (checkbox.checked) {
+      options.push(checkbox.value);
+    } else {
+      const index = options.indexOf(checkbox.value);
+      if (index > -1) {
+        options.splice(index, 1);
+      }
+    }
+    this.sellForm.patchValue({ options });
+  }
+}
+
+

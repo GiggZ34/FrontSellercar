@@ -23,6 +23,10 @@ export class ApiManagementService {
     this._token = token;
   }
 
+  destroyToken(){
+    this._token = null;
+  }
+
   getToken() {
     return this._token;
   }
@@ -59,12 +63,19 @@ export class ApiManagementService {
                          force?: boolean
                        } = {}): Promise<R> {
 
+    const headers = new HttpHeaders({
+      ...(options.call_without_token || !this._token ? {} : {
+        Authorization: `Token ${this._token}`
+      })
+    });
+
     return lastValueFrom(
       this._http.post<HttpResponse<T>>(
         this.paramsService.url_api + path,
         body,
         {
           withCredentials: true,
+          headers:headers,
           params: options.params
         }
       )
