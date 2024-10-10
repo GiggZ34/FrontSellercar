@@ -28,9 +28,10 @@ export class ServiceNewSellService {
     return reponse;
   }
 
-  async FuncGetOption():Promise<InterOptions[] |undefined>{
-    const reponse: InterOptions[] | undefined = await this.request.get("api/option/");
-    return reponse;
+  async FuncGetOption(vehicle_model: number):Promise<InterOptions[] |undefined>{
+    if (!vehicle_model) return [];
+
+    return await this.request.get(`api/option/?vehicle_model=${vehicle_model}`);
   }
 
   async FuncGetCustomers():Promise<Customers[] |undefined>{

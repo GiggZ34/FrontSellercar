@@ -43,8 +43,11 @@ export class NewSellComponent implements OnInit {
   ngOnInit(): void {
 
     this.loadCarModels().then();
-    this.loadOptions().then();
     this.loadCustomers().then();
+    this.sellForm.controls["carmodel"].valueChanges.subscribe(
+      value => {
+        this.newSellService.FuncGetOption(value).then(options => this.options = options ?? [])
+      })
   }
 
 
@@ -56,17 +59,6 @@ export class NewSellComponent implements OnInit {
       }
     } catch (error) {
       console.log(error)
-    }
-  }
-
-  async loadOptions() {
-    try {
-      const options = await this.newSellService.FuncGetOption();
-      if (options) {
-        this.options = options;
-      }
-    } catch (error) {
-      console.error(error);
     }
   }
 
