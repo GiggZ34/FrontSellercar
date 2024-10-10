@@ -51,9 +51,7 @@ export class NewSellComponent implements OnInit {
   async loadCarModels(){
     try{
       const models = await this.newSellService.FuncCarModels();
-      console.log(models)
       if(models) {
-        console.log("toto")
         this.carModels = models;
       }
     } catch (error) {

@@ -1,0 +1,22 @@
+<div class="form_block">
+  <h3>Add New Customer</h3>
+  <form [formGroup]="newCustomer" (ngSubmit)="onSubmit()">
+
+    <div class="block_first">
+      <label>First Name</label>
+      <input type="text" formControlName="first_name">
+    </div>
+
+    <div class="block_last">
+      <label>Last Name</label>
+      <input type="text" formControlName="last_name">
+    </div>
+
+    <div class="block_birthday">
+      <label>Birthday</label>
+      <input type="text" formControlName="birthday">
+    </div>
+
+    <button type="submit">Valider</button>
+  </form>
+</div>

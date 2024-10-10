@@ -6,6 +6,7 @@ import {NgIf} from "@angular/common";
 import {NewSellComponent} from "../new-sell/new-sell.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
+import {NewCustomersComponent} from "../new-customers/new-customers.component";
 
 
 @Component({
@@ -32,8 +33,13 @@ export class AccueilPageComponent {
   openDialog(): void {
     this.dialog.open(NewSellComponent, {
       width: '400px',
-      //height: '300px',
     }) ;
+  }
+  openDialog2(): void {
+    this.dialog.open(NewCustomersComponent, {
+      width: '400px',
+      height: '60%',
+    })
   }
 
   readonly firstName = new FormControl(null);
