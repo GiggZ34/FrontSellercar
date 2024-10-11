@@ -1,0 +1,48 @@
+.block-form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.form-field {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column; /* Affiche les cases à cocher verticalement */
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  margin: 5px 0; /* Marge entre les lignes */
+}
+
+input[type="checkbox"] {
+  margin-right: 8px; /* Espace entre la case à cocher et le texte */
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3; /* Couleur de fond du bouton au survol */
+}

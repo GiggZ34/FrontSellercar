@@ -11,6 +11,7 @@ import {
 } from "@angular/material/table";
 import {InterDisplaySeller} from "./inter-display-seller";
 import {Router} from "@angular/router";
+import {MatButton} from "@angular/material/button";
 
 
 @Component({
@@ -26,7 +27,8 @@ import {Router} from "@angular/router";
     MatHeaderCellDef,
     MatCellDef,
     MatHeaderRowDef,
-    MatRowDef
+    MatRowDef,
+    MatButton
   ],
   templateUrl: './display-seller.component.html',
   styleUrl: './display-seller.component.scss'
@@ -62,4 +64,7 @@ constructor(private displaySellerService: ServiceDisplaySellerService, private r
     this.router.navigate([`all-sale/seller/${row.first_name}`]);
   }
 
+  Return(){
+  this.router.navigate(['accueil']);
+  }
 }

@@ -1,15 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AccueilService, SearchedUser} from "./accueil.service";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
+import {NewSellComponent} from "../new-sell/new-sell.component";
+import {MatDialog} from "@angular/material/dialog";
+import {MatButton} from "@angular/material/button";
+import {NewCustomersComponent} from "../new-customers/new-customers.component";
+
 
 @Component({
   selector: 'app-accueil-page',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    NewSellComponent,
+    MatButton
   ],
   templateUrl: './accueil-page.component.html',
   styleUrl: './accueil-page.component.scss'
@@ -18,8 +25,21 @@ export class AccueilPageComponent {
 
   public searchedUserResult: SearchedUser | undefined;
   public errorMsg:string="";
+  private dialog = inject(MatDialog)
 
   constructor(private router: Router, private functionService: AccueilService) {
+  }
+
+  openDialog(): void {
+    this.dialog.open(NewSellComponent, {
+      width: '400px',
+    }) ;
+  }
+  openDialog2(): void {
+    this.dialog.open(NewCustomersComponent, {
+      width: '400px',
+      height: '60%',
+    })
   }
 
   readonly firstName = new FormControl(null);
@@ -51,7 +71,7 @@ export class AccueilPageComponent {
   }
 
   redirectToSeller(){
-    this.router.navigate(['']);
+    this.router.navigate(['displaySeller']);
   }
 
   redirectToSale(){
