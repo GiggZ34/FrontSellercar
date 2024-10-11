@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {RequestInterceptor} from "./Services/request-interceptor.service";
 import {BrowserModule} from "@angular/platform-browser";
+import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 
 
 
@@ -10,7 +11,8 @@ import {BrowserModule} from "@angular/platform-browser";
   declarations: [],
   imports: [
     CommonModule,
-    BrowserModule
+    BrowserModule,
+    CanvasJSAngularChartsModule
   ],
   providers: [
     {
