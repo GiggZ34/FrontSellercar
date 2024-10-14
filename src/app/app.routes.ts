@@ -5,6 +5,7 @@ import {DisplaySellerComponent} from "./Page/display-seller/display-seller.compo
 import {SalePageComponent} from "./Page/sale-page/sale-page.component";
 import {NewSellComponent} from "./Page/new-sell/new-sell.component";
 import {NewCustomersComponent} from "./Page/new-customers/new-customers.component";
+import {StatsConcessionComponent} from "./Page/stats-concession/stats-concession.component";
 
 export const routes: Routes = [
   {
@@ -38,5 +39,9 @@ export const routes: Routes = [
   {
     path: 'newCustomers',
     component: NewCustomersComponent
+  },
+  {
+    path: 'statsConcession/:concession_id',
+    component: StatsConcessionComponent
   },
 ];

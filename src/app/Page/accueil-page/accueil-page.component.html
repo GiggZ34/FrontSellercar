@@ -9,6 +9,7 @@
         <button class="searchButton" (click)="searchUser()">Search</button>
         <button class="searchButton" (click)="openDialog()">Add new sale</button>
         <button class="searchButton" (click)="openDialog2()">Add new customer</button>
+        <button class="searchButton" (click)="redirectToStats()">View Stats Concession</button>
       </div>
 
         <div (click)="redirectCustomerWithId(searchedUserResult.id)" *ngIf="searchedUserResult" class="blockFindUser">

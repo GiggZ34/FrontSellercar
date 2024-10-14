@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
 import {ApiManagementService} from "../../Services/api-management.service";
+import {Customers} from "../new-sell/inter-new-sell";
 
 export interface SearchedUser {
   first_name:string,
   last_name:string,
   birthday:string,
   id:number
+}
+
+export interface GetId{
+  first_name: String,
+  last_name: String,
+  username: String,
+  email: String,
+  password: String,
+  roles: String,
+  concession: number
 }
 
 @Injectable({
@@ -36,4 +47,7 @@ export class AccueilService {
     }
   }
 
+  async FuncGetIDConcession():Promise<GetId[] | undefined>{
+    return await this.request.get(`api/seller/`)
+  }
 }
