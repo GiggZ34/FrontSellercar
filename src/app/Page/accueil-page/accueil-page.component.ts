@@ -7,7 +7,6 @@ import {NewSellComponent} from "../new-sell/new-sell.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import {NewCustomersComponent} from "../new-customers/new-customers.component";
-import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 
 
 @Component({
@@ -18,7 +17,6 @@ import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
     NgIf,
     NewSellComponent,
     MatButton,
-    CanvasJSAngularChartsModule
   ],
   templateUrl: './accueil-page.component.html',
   styleUrl: './accueil-page.component.scss'
@@ -75,6 +73,10 @@ export class AccueilPageComponent implements OnInit{
       })
   }
 
+  redirectCustomerWithId(customerId : number){
+    this.router.navigate([`all-sale/customer/${customerId}`]);
+  }
+
   getId() {
     this.functionService.FuncGetIDConcession().then((data: GetId[] | undefined) => {
       if(data){
@@ -99,11 +101,12 @@ export class AccueilPageComponent implements OnInit{
     this.router.navigate(['all-sale']);
   }
 
+
   redirectToStats() {
     if(this.concession){
       this.router.navigate([`statsConcession/${this.concession.get(1)}`]);
     }
-  }
+  
 
 
   chartOptions = {

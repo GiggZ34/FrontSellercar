@@ -3,9 +3,10 @@ import {ApiManagementService} from "../../Services/api-management.service";
 import {Customers} from "../new-sell/inter-new-sell";
 
 export interface SearchedUser {
-  first_name:String,
-  last_name:String,
-  birthday:String,
+  first_name:string,
+  last_name:string,
+  birthday:string,
+  id:number
 }
 
 export interface GetId{

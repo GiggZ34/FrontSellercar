@@ -1,16 +1,40 @@
-@if(!sellerFirstName && !customerFirstName){
-  <h1 class="title_allSale">ALL SALE</h1>
-} @else if (sellerFirstName && !customerFirstName){
-  <h1 class="title_allSale">SOLD BY : {{allSale[0].seller.first_name}} {{allSale[0].seller.last_name}}</h1>
-}@else if (customerFirstName && !sellerFirstName){
-  <h1 class="title_allSale">PURCHASE OF : {{allSale[0].customer.first_name}} {{allSale[0].customer.last_name}}</h1>
-}
+<div class="block">
+  @if(allSale[0]){
+    @if(!sellerId && !customerId){
+      <h1 class="title_allSale">ALL SALE</h1>
+    } @else if (sellerId && !customerId){
+      <h1 class="title_allSale">SOLD BY : {{allSale[0].seller.first_name}} {{allSale[0].seller.last_name}}</h1>
+    }@else if (customerId && !sellerId){
+      <h1 class="title_allSale">PURCHASE OF : {{allSale[0].customer.first_name}} {{allSale[0].customer.last_name}}</h1>
+    }
 
 
+    @if (sellerId && !customerId){
+      <div class="totalBlock">
+        <div class="canvaTotal">
+          <canvasjs-chart [options]="chartPieConcession"></canvasjs-chart>
+        </div>
+        <div class="canvaTotal">
+          <canvasjs-chart [options]="chartPieTotal"></canvasjs-chart>
+        </div>
+        <div class="canvaTotal">
+          <canvasjs-chart [options]="stackedChartOptions"></canvasjs-chart>
+        </div>
+      </div>
 
-<div class="block-sale">
-  @for (item of allSale; track item.id){
-    <app-sale-card class="sale-card" [sale]="item"></app-sale-card>
+      <h1 class="title_allSale">SALES LIST : </h1>
+    }
+
+    <div class="block-sale">
+      @for (item of allSale; track item.id){
+        <app-sale-card class="sale-card" [sale]="item"></app-sale-card>
+      }
+    </div>
+
+    <button mat-stroked-button class="button_retour" (click)="Return()">retour</button>
+
+  } @else {
+    <h1>NO PURCHASE</h1>
   }
 </div>
 

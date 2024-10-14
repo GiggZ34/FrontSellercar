@@ -12,7 +12,7 @@
         <button class="searchButton" (click)="redirectToStats()">View Stats Concession</button>
       </div>
 
-        <div (click)="redirectCustomerWithId(searchedUserResult.first_name)" *ngIf="searchedUserResult" class="blockFindUser">
+        <div (click)="redirectCustomerWithId(searchedUserResult.id)" *ngIf="searchedUserResult" class="blockFindUser">
           <p>{{searchedUserResult.last_name}}</p>
           <p >{{searchedUserResult.first_name}}</p>
           <p>➡️</p>
@@ -37,9 +37,4 @@
     </div>
   </div>
 
-
-
-  <div>
-    <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
-  </div>
 </div>

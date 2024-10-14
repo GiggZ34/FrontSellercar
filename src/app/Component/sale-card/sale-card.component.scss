@@ -4,15 +4,15 @@
   border: 1px solid #6C63AC;
   padding: 20px;
   border-radius: 8px;
-  max-width: 500px;
-  margin: 20px auto;
+  display: flex;
+  justify-content: space-around;
 }
 
 .car-model{
   display: flex;
-  text-align: center;
-  width: 100%;
-  justify-content: space-between;
+  width: 15%;
+  flex-direction: column;
+  border-right: black 1px solid;
 }
 
 .car-model h2 {
@@ -20,13 +20,15 @@
   font-size: 1.5em;
 }
 
-.customer-info, .options, .seller-info {
-  margin-top: 20px;
-}
 
 .customer-info h3, .options h3, .seller-info h3 {
   color: #6C63AC;
   font-size: 1.2em;
+}
+
+.customer-info, .options, .seller-info {
+  border-right: black 1px solid;
+  width: 32%;
 }
 
 ul {
@@ -35,21 +37,29 @@ ul {
 }
 
 .blockUser{
+  width: 60%;
   display: flex;
   justify-content: space-between;
 }
 
+
+.blockImg{
+  width: 20%;
+}
+
 .imgBlocOpt{
-  width: 40%;
+  width: 100%;
 }
 
 .clickable{
-  text-decoration: underline;
-  text-underline: #6C63AC;
+  display: inline-block;
+  border-bottom: 1px solid #6C63AC;
   cursor: pointer;
+  font-weight: bolder;
+  transition: transform 100ms ease-in-out;
 }
 
 .clickable:hover{
-  text-underline:  #6C63AC;
   color:  #6C63AC;
+  transform: scale(1.01);
 }

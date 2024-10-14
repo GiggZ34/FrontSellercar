@@ -116,7 +116,13 @@
 
 .blockSell:hover{
   transform: scale(1.02);
+
+    .imgBlock{
+      transform: scale(0.9);
+    }
 }
+
+
 
 .blockTitle{
   color:white;
@@ -125,6 +131,7 @@
 .imgBlock{
   width: 75%;
   object-fit: cover;
+  transition: transform 200ms ease-in-out;
 }
 
 .text-error{

@@ -1,22 +1,41 @@
 .block-sale {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 16px;
 }
 
 .sale-card {
-  flex: 1 1 calc(45% - 16px);
-  max-width: calc(45% - 16px);
+  width: 100%;
 }
 
-@media (max-width: 768px) {
-  .sale-card {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
+
+
+
+.totalBlock{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.canvaTotal{
+  width: 30%;
+}
+
+.button_retour{
+  margin-top: 10px;
+  background-color: #03dac6;
+  width: 100%;
+}
+
+.block{
+  padding: 2vh 5vw;
+  display: flex;
+  flex-direction: column;
+  gap:20px;
 }
 
 .title_allSale{
-  margin-left: 10%;
+  margin-top: 5vh;
+  margin-bottom: 0px;
 }

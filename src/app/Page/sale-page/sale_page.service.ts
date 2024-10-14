@@ -4,6 +4,7 @@ import {ApiManagementService} from "../../Services/api-management.service";
 export interface AllSale {
   id: number,
   seller: {
+    id: number,
     roles: string,
     first_name: string,
     last_name: string,
@@ -15,6 +16,7 @@ export interface AllSale {
     price: number
   },
   customer: {
+    id:number,
     first_name: string,
     last_name: string,
     birthday: string,
@@ -27,6 +29,51 @@ export interface AllSale {
     }
   ]
 }
+
+export interface UserStatInterface {
+  id: number,
+  first_name: string,
+  last_name: string,
+  concession: number,
+  number_sale_model: number,
+  number_sale_option: number,
+  percent_sales_total: number,
+  percent_sales_concession: number,
+  avg_option_per_car: number,
+  total_sales: number
+}
+
+export interface PieChartOptions {
+  title: { text: string; };
+  animationEnabled: boolean,
+  data: Array<{
+    type: string;
+    dataPoints: Array<{
+      label: string;
+      y: number;
+    }>;
+  }>;
+}
+
+export interface StackedColumnChartOptions {
+  title: { text: string; };
+  animationEnabled: boolean,
+  axisY: {
+    labelFormatter: () => string;
+    gridThickness: number;
+    lineThickness: number;
+    tickLength: number;
+  };
+  data: Array<{
+    type: string;
+    dataPoints: Array<{
+      label: string;
+      y: number;
+    }>;
+  }>;
+}
+
+
 
 
 @Injectable({
@@ -43,5 +90,9 @@ export class Sale_pageService {
 
   async getSale():Promise<AllSale[] | undefined>{
       return await this.request.get(`api/relation_sells/`)
+  }
+
+  async getUserStat(userId: number | null):Promise<UserStatInterface | undefined>{
+    return await this.request.get(`api/stat_seller/${userId}`);
   }
 }
