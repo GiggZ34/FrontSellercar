@@ -19,6 +19,19 @@ export interface GetId{
   concession: number
 }
 
+export interface GeneralStat{
+  top_selled_car: {
+    model:string,
+    number:number
+  },
+  top_seller: {
+    id:number,
+    name:string,
+    number:number
+  },
+  total_sale_price: number,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,5 +62,9 @@ export class AccueilService {
 
   async FuncGetIDConcession():Promise<GetId[] | undefined>{
     return await this.request.get(`api/seller/`)
+  }
+
+  async getGeneralStat():Promise<GeneralStat | undefined>{
+    return await this.request.get(`api/stat_general/`)
   }
 }

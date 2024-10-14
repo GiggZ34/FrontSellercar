@@ -14,14 +14,16 @@
           <button class="searchButton" (click)="redirectToStats()">View Stats Concession {{selectedConcession}}</button>
         }
         @else{
-          <div class="block_choose_concession">
-            <p class="text_select">Choose a concession</p>
-            <select class="select_concession" [(ngModel)]="selectedConcession">
-              <option *ngFor="let concessionId of concession?.keys()" [value]="concessionId">
-                {{ concessionId }}
-              </option>
-            </select>
-          </div>
+          @if(concession){
+            <div class="block_choose_concession">
+              <p class="text_select">Choose a concession</p>
+              <select class="select_concession" [(ngModel)]="selectedConcession">
+                <option *ngFor="let concessionId of concession.keys()" [value]="concessionId">
+                  {{ concessionId }}
+                </option>
+              </select>
+            </div>
+          }
         }
 
       </div>
@@ -41,14 +43,58 @@
     </div>
 
   <div class="blocClick">
-    <div class="blockSell" (click)="redirectToSale()">
-      <h3 class="blockTitle">LOOK AT SALE</h3>
-      <img class="imgBlock" src="sale_791876.png">
+
+
+    <div class="block_choice">
+      <div class="blockSell" (click)="redirectToSale()">
+        <h3 class="blockTitle">LOOK AT SALE</h3>
+        <img class="imgBlock" src="sale_791876.png">
+      </div>
+      <div class="blockSell opacity-purple" (click)="redirectToSeller()">
+        <h3 class="blockTitle">LOOK AT SELLER</h3>
+        <img class="imgBlock" src="seller_17627558.png">
+      </div>
     </div>
-    <div class="blockSell opacity-purple" (click)="redirectToSeller()">
-      <h3 class="blockTitle">LOOK AT SELLER</h3>
-      <img class="imgBlock" src="seller_17627558.png">
-    </div>
+
+    @if(generalStat){
+      <div class="block_stat">
+        <div class="sales-info">
+          <div class="stat-card top-selled-car">
+            <div class="car-info">
+              <div class="car-details">
+                <h2>Top Selled Car In All Concession 🚀</h2>
+                <p>Model : {{ generalStat.top_selled_car.model }}</p>
+                <p>Number Sold : {{ generalStat.top_selled_car.number }}</p>
+              </div>
+
+              @if(generalStat.top_selled_car.model === "Model S"){
+                <img src="model_s.png">
+              } @else if(generalStat.top_selled_car.model === "Cybertruck"){
+                <img src="cybertruk.png">
+              } @else if(generalStat.top_selled_car.model === "Model 3"){
+                <img src="model_3.png">
+              } @else if(generalStat.top_selled_car.model === "Model Y"){
+                <img src="model_y.png">
+              }
+            </div>
+          </div>
+
+          <div class="stat-card top-seller">
+            <h2>Top Seller In All Concession 🥇</h2>
+            <p>Name : <span class="clickable" (click)="redirectSeller(generalStat.top_seller.id)">{{ generalStat.top_seller.name }}</span></p>
+            <p>Cars Sold : {{ generalStat.top_seller.number }}</p>
+          </div>
+
+          <div class="stat-card total-sale-price">
+            <h2>Total Sale In All Concession 💹</h2>
+            <p class="text_price">{{ generalStat.total_sale_price }}$</p>
+          </div>
+        </div>
+      </div>
+    }
   </div>
+
+
+
 
 </div>
