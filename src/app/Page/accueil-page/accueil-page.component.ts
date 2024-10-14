@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AccueilService, SearchedUser} from "./accueil.service";
+import {AccueilService, GetId, SearchedUser} from "./accueil.service";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {NewSellComponent} from "../new-sell/new-sell.component";
@@ -23,13 +23,19 @@ import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
   templateUrl: './accueil-page.component.html',
   styleUrl: './accueil-page.component.scss'
 })
-export class AccueilPageComponent {
+export class AccueilPageComponent implements OnInit{
 
+  public concession: Map<any, any> | undefined;
   public searchedUserResult: SearchedUser | undefined;
   public errorMsg:string="";
   private dialog = inject(MatDialog)
 
-  constructor(private router: Router, private functionService: AccueilService) {
+
+  constructor(private router: Router, private functionService: AccueilService, ) {
+  }
+
+  ngOnInit() {
+    this.getId()
   }
 
   openDialog(): void {
@@ -46,6 +52,7 @@ export class AccueilPageComponent {
 
   readonly firstName = new FormControl(null);
   readonly lastName = new FormControl(null);
+
 
   async searchUser(){
 
@@ -68,6 +75,18 @@ export class AccueilPageComponent {
       })
   }
 
+  getId() {
+    this.functionService.FuncGetIDConcession().then((data: GetId[] | undefined) => {
+      if(data){
+        this.concession = data.reduce((map, current) => {
+          if (current.concession != null) {
+            map.set(current.concession, current.concession);
+          }
+          return map;
+        }, new Map());      }
+    })
+  }
+
   redirectCustomerWithId(firstName : String){
     this.router.navigate([`all-sale/customer/${firstName}`]);
   }
@@ -78,6 +97,12 @@ export class AccueilPageComponent {
 
   redirectToSale(){
     this.router.navigate(['all-sale']);
+  }
+
+  redirectToStats() {
+    if(this.concession){
+      this.router.navigate([`statsConcession/${this.concession.get(1)}`]);
+    }
   }
 
 
