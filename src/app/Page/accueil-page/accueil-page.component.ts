@@ -85,12 +85,9 @@ export class AccueilPageComponent implements OnInit{
             map.set(current.concession, current.concession);
           }
           return map;
-        }, new Map());      }
+        }, new Map());
+      }
     })
-  }
-
-  redirectCustomerWithId(firstName : String){
-    this.router.navigate([`all-sale/customer/${firstName}`]);
   }
 
   redirectToSeller(){
@@ -103,10 +100,11 @@ export class AccueilPageComponent implements OnInit{
 
 
   redirectToStats() {
-    if(this.concession){
+    if (this.concession) {
       this.router.navigate([`statsConcession/${this.concession.get(1)}`]);
     }
-  
+  }
+
 
 
   chartOptions = {
