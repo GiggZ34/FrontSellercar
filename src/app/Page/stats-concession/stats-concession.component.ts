@@ -2,14 +2,16 @@ import {Component, inject, OnInit} from '@angular/core';
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 import {ServiceStatsConcessionService} from "./service-stats-concession.service";
 import {InterStatsConcession, InterStatsPercent} from './inter-stats-concession';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MatButton} from "@angular/material/button";
 
 
 @Component({
   selector: 'app-stats-concession',
   standalone: true,
   imports: [
-    CanvasJSAngularChartsModule
+    CanvasJSAngularChartsModule,
+    MatButton
   ],
   templateUrl: './stats-concession.component.html',
   styleUrls: ['./stats-concession.component.scss']
@@ -42,8 +44,8 @@ export class StatsConcessionComponent {
     }]
   }
 
-  constructor(private lookStats: ServiceStatsConcessionService, route: ActivatedRoute) {
-    route.params.subscribe(params => this.getStat(params["concession_id"]))
+  constructor( private router: Router,private lookStats: ServiceStatsConcessionService, route: ActivatedRoute) {
+    route.params.subscribe(params => this.getStat(params["concession_id"]),)
   }
 
   getStat(id: number) {
@@ -88,5 +90,9 @@ export class StatsConcessionComponent {
           })
       }]
     }
+  }
+
+  returnAccueil() {
+    this.router.navigate(["accueil"]);
   }
 }
