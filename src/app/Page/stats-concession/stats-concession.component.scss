@@ -1,0 +1,26 @@
+.retour {
+  background-color: #1976d2;
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  text-transform: uppercase;
+}
+
+.retour:hover {
+  background-color: #1565c0;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.retour:active {
+  background-color: #0d47a1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.retour:focus {
+  outline: none;
+}
+
