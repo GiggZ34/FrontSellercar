@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {ApiManagementService} from "../../Services/api-management.service";
 
 export interface SearchedUser {
-  first_name:String,
-  last_name:String,
-  birthday:String,
+  first_name:string,
+  last_name:string,
+  birthday:string,
+  id:number
 }
 
 @Injectable({

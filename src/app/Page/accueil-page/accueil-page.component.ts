@@ -7,7 +7,6 @@ import {NewSellComponent} from "../new-sell/new-sell.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import {NewCustomersComponent} from "../new-customers/new-customers.component";
-import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 
 
 @Component({
@@ -18,7 +17,6 @@ import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
     NgIf,
     NewSellComponent,
     MatButton,
-    CanvasJSAngularChartsModule
   ],
   templateUrl: './accueil-page.component.html',
   styleUrl: './accueil-page.component.scss'
@@ -68,8 +66,8 @@ export class AccueilPageComponent {
       })
   }
 
-  redirectCustomerWithId(firstName : String){
-    this.router.navigate([`all-sale/customer/${firstName}`]);
+  redirectCustomerWithId(customerId : number){
+    this.router.navigate([`all-sale/customer/${customerId}`]);
   }
 
   redirectToSeller(){
@@ -79,21 +77,4 @@ export class AccueilPageComponent {
   redirectToSale(){
     this.router.navigate(['all-sale']);
   }
-
-
-  chartOptions = {
-    title: {
-      text: "Basic Column Chart in Angular"
-    },
-    data: [{
-      type: "column",
-      dataPoints: [
-        { label: "Apple",  y: 10  },
-        { label: "Orange", y: 15  },
-        { label: "Banana", y: 25  },
-        { label: "Mango",  y: 30  },
-        { label: "Grape",  y: 28  }
-      ]
-    }]
-  };
 }

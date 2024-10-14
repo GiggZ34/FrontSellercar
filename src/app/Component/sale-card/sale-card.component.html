@@ -3,26 +3,23 @@
 
     <div class="car-model">
       <h2>Sale number {{sale.id}}</h2>
-      <h2>{{ sale.carmodel.model }} - {{ sale.carmodel.price | currency: 'EUR' }}</h2>
+      <p>{{ sale.carmodel.model }} - {{ sale.carmodel.price | currency: 'EUR' }}</p>
     </div>
 
     <div class="blockUser">
       <div class="customer-info">
         <h3>Client</h3>
-        <p (click)="redirectLink('customer', sale.customer.first_name)">Nom : <span class="clickable" >{{ sale.customer.first_name }} {{ sale.customer.last_name }}</span></p>
+        <p (click)="redirectLink('customer', sale.customer.id)">Nom : <span class="clickable" >{{ sale.customer.first_name }} {{ sale.customer.last_name }}</span></p>
         <p>Date de naissance : {{ sale.customer.birthday | date: 'dd/MM/yyyy' }}</p>
       </div>
 
       <div class="seller-info">
         <h3>Vendeur</h3>
-        <p (click)="redirectLink('seller', sale.seller.first_name)">Nom : <span class="clickable" >{{ sale.seller.first_name }} {{ sale.seller.last_name }}</span></p>
+        <p (click)="redirectLink('seller', sale.seller.id)">Nom : <span class="clickable" >{{ sale.seller.first_name }} {{ sale.seller.last_name }}</span></p>
         <p>Email : {{ sale.seller.username }}</p>
         <p>Rôle : {{ sale.seller.roles }}</p>
       </div>
-    </div>
 
-
-    <div class="blockUser">
       <div class="options">
         <h3>Options</h3>
         <ul>
@@ -36,6 +33,10 @@
 
         </ul>
       </div>
+    </div>
+
+
+    <div class="blockImg">
 
       @if(sale.carmodel.model === "Model S"){
         <img class="imgBlocOpt" src="model_s.png">

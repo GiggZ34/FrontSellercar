@@ -24,11 +24,11 @@ export const routes: Routes = [
     component: SalePageComponent
   },
   {
-    path: 'all-sale/seller/:seller_firstName',
+    path: 'all-sale/seller/:seller_id',
     component: SalePageComponent
   },
   {
-    path: 'all-sale/customer/:customer_firstName',
+    path: 'all-sale/customer/:customer_id',
     component: SalePageComponent
   },
   {

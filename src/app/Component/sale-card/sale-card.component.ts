@@ -21,8 +21,7 @@ export class SaleCardComponent {
 
   @Input() sale: AllSale | undefined;
 
-  redirectLink(route : string, user : string){
-    console.log('toto')
+  redirectLink(route : string, user : number){
     this.router.navigate([`all-sale/${route}/${user}`]);
   }
 }
