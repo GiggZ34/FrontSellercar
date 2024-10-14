@@ -10,6 +10,7 @@ import {
 import {SaleCardComponent} from "../../Component/sale-card/sale-card.component";
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 import {MatButton} from "@angular/material/button";
+import {CheckConnexionService} from "../../Services/check-connexion.service";
 
 @Component({
   selector: 'app-sale-page',
@@ -24,7 +25,10 @@ import {MatButton} from "@angular/material/button";
 })
 export class SalePageComponent implements OnInit {
 
-  constructor(private router: Router, private functionService: Sale_pageService, private route: ActivatedRoute) {}
+  constructor(private router: Router,
+              private functionService: Sale_pageService,
+              private route: ActivatedRoute,
+              private connexion : CheckConnexionService ) {}
 
   public allSale : AllSale[] = [];
   public sellerId: number | null = null;
@@ -85,6 +89,7 @@ export class SalePageComponent implements OnInit {
       this.customerId = parseInt(<string>params.get('customer_id'));
       this.getSale(this.sellerId, this.customerId);
     });
+    this.connexion.checkConnexion()
   }
 
   getSale(sellerFirstName: number | null, customerFirstName: number | null) {

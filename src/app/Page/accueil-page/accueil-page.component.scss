@@ -7,7 +7,7 @@
 
 .search {
   &__container {
-    width: 60%;
+    width: 80%;
     margin-left: 10px;
     margin-top: 10px;
     height:20%;
@@ -24,7 +24,7 @@
   }
 
   &__input {
-    width: 40%;
+    width: 20%;
 
     padding: 12px 0;
     outline: 0;
@@ -63,6 +63,29 @@
 .searchButton:hover{
   transform: scale(1.05);
 }
+
+.text_select{
+  background:  #5C5696;
+  color: white;
+  height: 100%;
+}
+
+.block_choose_concession{
+  background:  #5C5696;
+  padding: 1px 10px;
+  border: 1px solid;
+  border-radius: 10px;
+  display: flex;
+  color: white;
+  align-items: center;
+  margin-left:4px ;
+  gap:4px
+}
+
+.text_select{
+  height: fit-content;
+}
+
 
 .blockFindUser{
   margin-top: 20px;

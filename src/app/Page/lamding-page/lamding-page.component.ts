@@ -36,8 +36,10 @@ export class LamdingPageComponent  {
   constructor(@Inject(DOCUMENT) private document: Document,
               private request: ApiManagementService,
               private router: Router) {
-  this.localstorage = document.defaultView?.localStorage;
-  this.request.destroyToken();
+    this.localstorage = document.defaultView?.localStorage;
+    this.request.destroyToken();
+
+    this.localstorage?.removeItem("token")
   }
 
    sendLogin() {

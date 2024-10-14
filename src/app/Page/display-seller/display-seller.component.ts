@@ -17,6 +17,7 @@ import {
 import {Router} from "@angular/router";
 import {MatButton} from "@angular/material/button";
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
+import {CheckConnexionService} from "../../Services/check-connexion.service";
 
 
 @Component({
@@ -57,11 +58,14 @@ export class DisplaySellerComponent implements  OnInit {
     }]
   };
 
-constructor(private displaySellerService: ServiceDisplaySellerService, private router: Router) { }
+constructor(private displaySellerService: ServiceDisplaySellerService,
+            private router: Router,
+            private connexion : CheckConnexionService ) { }
 
   ngOnInit() {
     this.displayUser()
     this.getAllUserStat()
+    this.connexion.checkConnexion()
   }
 
   displayUser(){

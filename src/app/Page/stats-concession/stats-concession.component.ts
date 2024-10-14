@@ -4,6 +4,7 @@ import {ServiceStatsConcessionService} from "./service-stats-concession.service"
 import {InterStatsConcession, InterStatsPercent} from './inter-stats-concession';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatButton} from "@angular/material/button";
+import {CheckConnexionService} from "../../Services/check-connexion.service";
 
 
 @Component({
@@ -44,11 +45,15 @@ export class StatsConcessionComponent {
     }]
   }
 
-  constructor( private router: Router,private lookStats: ServiceStatsConcessionService, route: ActivatedRoute) {
+  constructor( private router: Router,
+               private lookStats: ServiceStatsConcessionService,
+               route: ActivatedRoute,
+               private connexion : CheckConnexionService) {
     route.params.subscribe(params => this.getStat(params["concession_id"]),)
   }
 
   getStat(id: number) {
+    this.connexion.checkConnexion()
     this.lookStats.FuncStatConcession().then((stats: InterStatsConcession[] | undefined) => {
       if (stats) {
         const stats_mapped = stats.reduce((map, current) => map.set(current.id.toString(), current), new Map());
