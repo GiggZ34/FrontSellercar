@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="search__container">
+      <p class="search__title">
+        Search a customer
+      </p>
+      <div class="inputBlock">
+        <input [formControl]="firstName" class="search__input" type="text" placeholder="first name" >
+        <input [formControl]="lastName" class="search__input" type="text" placeholder="last name" >
+        <button class="searchButton" (click)="searchUser()">Search</button>
+        <button class="searchButton" (click)="openDialog()">Add new sale</button>
+        <button class="searchButton" (click)="openDialog2()">Add new customer</button>
+        <button class="searchButton" (click)="redirectToStats()">View Stats Concession</button>
+      </div>
+
+        <div (click)="redirectCustomerWithId(searchedUserResult.first_name)" *ngIf="searchedUserResult" class="blockFindUser">
+          <p>{{searchedUserResult.last_name}}</p>
+          <p >{{searchedUserResult.first_name}}</p>
+          <p>➡️</p>
+        </div>
+
+      @if(errorMsg !== ""){
+        <div class="blockFindUserError">
+          <p class="text-error">{{errorMsg}}</p>
+        </div>
+      }
+
+    </div>
+
+  <div class="blocClick">
+    <div class="blockSell" (click)="redirectToSale()">
+      <h3 class="blockTitle">LOOK AT SALE</h3>
+      <img class="imgBlock" src="sale_791876.png">
+    </div>
+    <div class="blockSell opacity-purple" (click)="redirectToSeller()">
+      <h3 class="blockTitle">LOOK AT SELLER</h3>
+      <img class="imgBlock" src="seller_17627558.png">
+    </div>
+  </div>
+
+
+
+  <div>
+    <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+  </div>
+</div>

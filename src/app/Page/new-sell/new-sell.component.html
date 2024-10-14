@@ -1,0 +1,33 @@
+<div class="block-form">
+  <form [formGroup]="sellForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-field option">
+      <label for="carModel">Car Models</label>
+      <select id="carModel" formControlName="carmodel">
+        <option *ngFor="let model of carModels" [value]="model.id">{{ model.model }}</option>
+      </select>
+    </div>
+
+    <div class="form-field option">
+      <label for="customer">Customers</label>
+      <select id="customer" formControlName="customer">
+        <option *ngFor="let first_name of customer" [value]="first_name.id">{{ first_name.first_name }}</option>
+      </select>
+    </div>
+
+    <div class="form-field option">
+      <label>Options</label>
+      <div class="checkbox-group" formControlName="options">
+        <div *ngFor="let option of options">
+          <label>
+            <input type="checkbox" [value]="option.id" (change)="onOptionChange($event)" />
+            {{ option.title }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit">Valider</button>
+
+  </form>
+</div>
