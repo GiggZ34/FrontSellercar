@@ -9,12 +9,21 @@
         <button class="searchButton" (click)="searchUser()">Search</button>
         <button class="searchButton" (click)="openDialog()">Add new sale</button>
         <button class="searchButton" (click)="openDialog2()">Add new customer</button>
-          <select [(ngModel)]="selectedConcession">
-            <option *ngFor="let concessionId of concession?.keys()" [value]="concessionId">
-              {{ concessionId }}
-            </option>
-          </select>
-          <button class="searchButton" (click)="redirectToStats()">View Stats Concession</button>
+
+        @if(selectedConcession){
+          <button class="searchButton" (click)="redirectToStats()">View Stats Concession {{selectedConcession}}</button>
+        }
+        @else{
+          <div class="block_choose_concession">
+            <p class="text_select">Choose a concession</p>
+            <select class="select_concession" [(ngModel)]="selectedConcession">
+              <option *ngFor="let concessionId of concession?.keys()" [value]="concessionId">
+                {{ concessionId }}
+              </option>
+            </select>
+          </div>
+        }
+
       </div>
 
         <div (click)="redirectCustomerWithId(searchedUserResult.id)" *ngIf="searchedUserResult" class="blockFindUser">

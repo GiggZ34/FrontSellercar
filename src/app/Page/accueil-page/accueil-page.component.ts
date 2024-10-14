@@ -7,6 +7,7 @@ import {NewSellComponent} from "../new-sell/new-sell.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import {NewCustomersComponent} from "../new-customers/new-customers.component";
+import {CheckConnexionService} from "../../Services/check-connexion.service";
 
 
 @Component({
@@ -32,22 +33,24 @@ export class AccueilPageComponent implements OnInit{
   private dialog = inject(MatDialog)
 
 
-  constructor(private router: Router, private functionService: AccueilService, ) {
+  constructor(private router: Router,
+              private functionService: AccueilService,
+              private connexion : CheckConnexionService ) {
   }
 
   ngOnInit() {
-    this.getId()
+    this.getId();
+    this.connexion.checkConnexion();
   }
 
   openDialog(): void {
     this.dialog.open(NewSellComponent, {
-      width: '400px',
+
     }) ;
   }
   openDialog2(): void {
     this.dialog.open(NewCustomersComponent, {
-      width: '400px',
-      height: '60%',
+
     })
   }
 
