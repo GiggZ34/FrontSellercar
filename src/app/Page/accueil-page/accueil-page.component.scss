@@ -1,6 +1,10 @@
 .container{
     width: 100vw;
-    height: calc(100vh - 10px);
+    gap:5vw;
+    display: flex;
+  flex-direction: column;
+  margin-top: 2vw;
+  margin-bottom: 5vw;
 }
 
 //SEARCH BAR
@@ -9,8 +13,6 @@
   &__container {
     width: 80%;
     margin-left: 10px;
-    margin-top: 10px;
-    height:20%;
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
@@ -112,24 +114,49 @@
 }
 
 .blocClick{
-  width: 100%;
+  width: 96%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height:80%;
+}
+
+@media (max-width: 768px){
+  .blocClick{
+    flex-direction: column;
+    gap:2vw;
+  }
+
+  .block_choice{
+    width: 100% !important;
+  }
+
+  .block_stat{
+    width: 100% !important;
+  }
 }
 
 .blockSell{
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 40%;
-  height:80%;
+  width: 100%;
+  height:45%;
   background: rgba(92, 86, 150, 0.64);
   cursor: pointer;
   border-radius: 14px;
   transition: transform 200ms ease-in-out;
+}
+
+.block_stat{
+  width: 45%;
+}
+
+.block_choice{
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap:2vw;
+  padding: 0 2%;
 }
 
 .opacity-purple{
@@ -152,7 +179,7 @@
 }
 
 .imgBlock{
-  width: 75%;
+  width: 25%;
   object-fit: cover;
   transition: transform 200ms ease-in-out;
 }
@@ -161,3 +188,69 @@
   color:red;
 }
 
+.sales-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 0 2%;
+}
+
+.stat-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: scale(1.02);
+}
+
+.car-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.car-info img {
+  width: 30%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+p {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+.clickable {
+  color: #6C63AC;
+  font-weight: bold;
+  cursor: pointer;
+  font-size : 1.8rem;
+  border-bottom: 1px solid #6C63AC;
+  transition: color 0.3s, transform 0.1s;
+}
+
+.clickable:hover {
+  color: #4A47A3;
+  transform: scale(1.05);
+}
+
+.text_price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #28a745;
+}

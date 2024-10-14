@@ -1,6 +1,6 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AccueilService, GetId, SearchedUser} from "./accueil.service";
+import {AccueilService, GeneralStat, GetId, SearchedUser} from "./accueil.service";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {NewSellComponent} from "../new-sell/new-sell.component";
@@ -22,7 +22,8 @@ import {CheckConnexionService} from "../../Services/check-connexion.service";
     NgForOf,
   ],
   templateUrl: './accueil-page.component.html',
-  styleUrl: './accueil-page.component.scss'
+  styleUrl: './accueil-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccueilPageComponent implements OnInit{
 
@@ -31,16 +32,18 @@ export class AccueilPageComponent implements OnInit{
   public searchedUserResult: SearchedUser | undefined;
   public errorMsg:string="";
   private dialog = inject(MatDialog)
+  public generalStat : GeneralStat | undefined;
 
 
   constructor(private router: Router,
               private functionService: AccueilService,
-              private connexion : CheckConnexionService ) {
+              private connexion : CheckConnexionService,private cdRef: ChangeDetectorRef ) {
   }
 
   ngOnInit() {
     this.getId();
     this.connexion.checkConnexion();
+    this.getGeneralStat();
   }
 
   openDialog(): void {
@@ -52,6 +55,15 @@ export class AccueilPageComponent implements OnInit{
     this.dialog.open(NewCustomersComponent, {
 
     })
+  }
+
+  getGeneralStat(){
+    this.functionService.getGeneralStat().then((data: GeneralStat | undefined) => {
+      if(data){
+       this.generalStat = data
+      }
+      this.cdRef.markForCheck();
+    });
   }
 
   readonly firstName = new FormControl(null);
@@ -92,6 +104,7 @@ export class AccueilPageComponent implements OnInit{
           }
           return map;
         }, new Map());
+        this.cdRef.markForCheck();
       }
     });
   }
@@ -109,5 +122,9 @@ export class AccueilPageComponent implements OnInit{
     if (this.selectedConcession !== null) {
       this.router.navigate([`statsConcession/${this.selectedConcession}`]);
     }
+  }
+
+  redirectSeller(id:number){
+    this.router.navigate([`all-sale/seller/${id}`]);
   }
 }
