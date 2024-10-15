@@ -14,7 +14,10 @@ import {Router} from "@angular/router";
   templateUrl: './sale-card.component.html',
   styleUrl: './sale-card.component.scss'
 })
-export class SaleCardComponent {
+export class SaleCardComponent{
+
+  public totalPrice: number = 0;
+  public totalOptions: number = 0;
 
   constructor(private router: Router) {
   }

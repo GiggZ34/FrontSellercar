@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {
   AllSale,
   PieChartOptions,
-  Sale_pageService,
+  Sale_pageService, SortCriteriaInterface,
   StackedColumnChartOptions,
   UserStatInterface
 } from "./sale_page.service";
@@ -11,6 +11,7 @@ import {SaleCardComponent} from "../../Component/sale-card/sale-card.component";
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 import {MatButton} from "@angular/material/button";
 import {CheckConnexionService} from "../../Services/check-connexion.service";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-sale-page',
@@ -18,7 +19,8 @@ import {CheckConnexionService} from "../../Services/check-connexion.service";
   imports: [
     SaleCardComponent,
     CanvasJSAngularChartsModule,
-    MatButton
+    MatButton,
+    FormsModule
   ],
   templateUrl: './sale-page.component.html',
   styleUrl: './sale-page.component.scss'
@@ -33,6 +35,14 @@ export class SalePageComponent implements OnInit {
   public allSale : AllSale[] = [];
   public sellerId: number | null = null;
   public customerId: number | null = null;
+
+   public sortCriteria: SortCriteriaInterface = {
+     total_price:  null,
+     total_options_price: null,
+     id: null,
+     customer__first_name:  null,
+     seller__first_name:  null
+    };
 
   //GRAPH
   chartPieConcession: PieChartOptions = {
@@ -90,12 +100,14 @@ export class SalePageComponent implements OnInit {
       this.getSale(this.sellerId, this.customerId);
     });
     this.connexion.checkConnexion()
+
+
+
   }
 
   getSale(sellerFirstName: number | null, customerFirstName: number | null) {
-    this.functionService.getSale().then((data:AllSale[] | undefined)=>{
+    this.functionService.getSale(this.sortCriteria).then((data:AllSale[] | undefined)=>{
       if(data){
-
         if(sellerFirstName && !customerFirstName){
 
           this.getUserStat()
@@ -127,7 +139,6 @@ export class SalePageComponent implements OnInit {
 
   getUserStat(){
     this.functionService.getUserStat(this.sellerId).then((data:UserStatInterface | undefined)=>{
-      console.log(data)
       this.setGraph(data)
     })
       .catch((error)=>{
@@ -195,6 +206,43 @@ export class SalePageComponent implements OnInit {
 
   Return(){
     this.router.navigate(['accueil']);
+  }
+
+   applyFilter() {
+
+     this.functionService.getSale(this.sortCriteria).then((data:AllSale[] | undefined)=>{
+
+       if(!data){
+         return
+       }
+
+       this.allSale = [];
+
+       if(this.sellerId && !this.customerId){
+
+         this.getUserStat()
+
+         data.map((item:AllSale) =>{
+           if(item.seller.id === this.sellerId){
+             this.allSale.push(item);
+           }
+         })
+
+       }else if (this.customerId && !this.sellerId){
+
+         data.map((item:AllSale) =>{
+           if(item.customer.id === this.customerId){
+             this.allSale.push(item);
+           }
+         })
+       }else{
+         this.allSale =data;
+       }
+
+     })
+       .catch((error)=>{
+         console.log('Erreur',error)
+       });
   }
 
 }

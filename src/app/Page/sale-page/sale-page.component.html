@@ -1,4 +1,8 @@
 <div class="block">
+
+
+
+
   @if(allSale[0]){
     @if(!sellerId && !customerId){
       <h1 class="title_allSale">ALL SALE</h1>
@@ -7,6 +11,8 @@
     }@else if (customerId && !sellerId){
       <h1 class="title_allSale">PURCHASE OF : {{allSale[0].customer.first_name}} {{allSale[0].customer.last_name}}</h1>
     }
+
+
 
 
     @if (sellerId && !customerId){
@@ -24,6 +30,56 @@
 
       <h1 class="title_allSale">SALES LIST : </h1>
     }
+
+    <!--SYSTÈME FILTRE-->
+    <div class="filter-container">
+      <div class="block_choice">
+        <div class="filter-item">
+          <label for="total-price-sort">Total Price :</label>
+          <select id="total-price-sort" [(ngModel)]="sortCriteria.total_price" (change)="applyFilter()">
+            <option [ngValue]="null">None</option>
+            <option value="">Ascending</option>
+            <option value="-">Descending</option>
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label for="options-price-sort">Options Price :</label>
+          <select id="options-price-sort" [(ngModel)]="sortCriteria.total_options_price" (change)="applyFilter()">
+            <option [ngValue]="null">None</option>
+            <option value="">Ascending</option>
+            <option value="-">Descending</option>
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label for="sale-number-sort">Sale Number :</label>
+          <select id="sale-number-sort" [(ngModel)]="sortCriteria.id" (change)="applyFilter()">
+            <option [ngValue]="null">None</option>
+            <option value="">Ascending</option>
+            <option value="-">Descending</option>
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label for="client-name-sort">Customer Name :</label>
+          <select id="client-name-sort" [(ngModel)]="sortCriteria.customer__first_name" (change)="applyFilter()">
+            <option [ngValue]="null">None</option>
+            <option value="">Ascending</option>
+            <option value="-">Descending</option>
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label for="seller-name-sort">Seller Name :</label>
+          <select id="seller-name-sort" [(ngModel)]="sortCriteria.seller__first_name" (change)="applyFilter()">
+            <option [ngValue]="null">None</option>
+            <option value="">Ascending</option>
+            <option value="-">Descending</option>
+          </select>
+        </div>
+      </div>
+    </div>
 
     <div class="block-sale">
       @for (item of allSale; track item.id){

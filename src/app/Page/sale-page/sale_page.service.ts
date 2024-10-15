@@ -28,6 +28,8 @@ export interface AllSale {
       price: number,
     }
   ]
+  total_price:number,
+  total_options_price:number
 }
 
 export interface UserStatInterface {
@@ -53,6 +55,14 @@ export interface PieChartOptions {
       y: number;
     }>;
   }>;
+}
+
+export interface SortCriteriaInterface {
+  total_price: string | null,
+  total_options_price: string | null,
+  id: string | null,
+  customer__first_name: string | null,
+  seller__first_name: string | null
 }
 
 export interface StackedColumnChartOptions {
@@ -88,8 +98,21 @@ export class Sale_pageService {
     this.request.setToken(this.token)
   }
 
-  async getSale():Promise<AllSale[] | undefined>{
-      return await this.request.get(`api/relation_sells/`)
+  async getSale(sortCriteria: SortCriteriaInterface): Promise<AllSale[] | undefined> {
+    let orderingParams = [];
+
+    for (const [key, value] of Object.entries(sortCriteria)) {
+      if (value === '') {
+        // Tri croissant
+        orderingParams.push(key);
+      } else if (value === '-') {
+        // Tri décroissant
+        orderingParams.push(`-${key}`);
+      }
+    }
+
+    const orderingQuery = orderingParams.length > 0 ? `?ordering=${orderingParams.join(',')}` : '';
+    return await this.request.get(`api/relation_sells/${orderingQuery}`);
   }
 
   async getUserStat(userId: number | null):Promise<UserStatInterface | undefined>{
