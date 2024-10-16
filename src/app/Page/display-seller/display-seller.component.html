@@ -7,32 +7,50 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Id </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      <th mat-header-cell *matHeaderCellDef (click)="Order('id')" class="clickable"> Id
+        <span *ngIf="counters['id'] === 1">&#9650;</span>
+        <span *ngIf="counters['id'] === 2">&#9660;</span>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}}</td>
     </ng-container>
 
     <ng-container matColumnDef="roles">
-      <th mat-header-cell *matHeaderCellDef> Roles </th>
+      <th mat-header-cell *matHeaderCellDef (click)="Order('roles')" class="clickable"> Roles
+        <span *ngIf="counters['roles'] === 1">&#9650;</span>
+        <span *ngIf="counters['roles'] === 2">&#9660;</span>
+      </th>
       <td mat-cell *matCellDef="let element"> {{element.roles}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="first_name">
-      <th mat-header-cell *matHeaderCellDef> First Name </th>
+    <ng-container matColumnDef="first_name" >
+      <th mat-header-cell *matHeaderCellDef (click)="Order('first_name')" class="clickable"> First Name
+        <span *ngIf="counters['first_name'] === 1">&#9650;</span>
+        <span *ngIf="counters['first_name'] === 2">&#9660;</span>
+      </th>
       <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="last_name">
-      <th mat-header-cell *matHeaderCellDef> Last Name </th>
+      <th mat-header-cell *matHeaderCellDef (click)="Order('last_name')" class="clickable"> Last Name
+        <span *ngIf="counters['last_name'] === 1">&#9650;</span>
+        <span *ngIf="counters['last_name'] === 2">&#9660;</span>
+      </th>
       <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="username">
-      <th mat-header-cell *matHeaderCellDef> Username </th>
+      <th mat-header-cell *matHeaderCellDef (click)="Order('username')" class="clickable"> Username
+        <span *ngIf="counters['username'] === 1">&#9650;</span>
+        <span *ngIf="counters['username'] === 2">&#9660;</span>
+      </th>
       <td mat-cell *matCellDef="let element"> {{element.username}} </td>
     </ng-container>
 
     <ng-container matColumnDef="concession">
-      <th mat-header-cell *matHeaderCellDef> Concession </th>
+      <th mat-header-cell *matHeaderCellDef (click)="Order('concession')" class="clickable"> Concession
+        <span *ngIf="counters['concession'] === 1">&#9650;</span>
+        <span *ngIf="counters['concession'] === 2">&#9660;</span>
+      </th>
       <td mat-cell *matCellDef="let element"> {{element.concession}} </td>
     </ng-container>
 

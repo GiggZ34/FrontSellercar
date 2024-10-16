@@ -99,3 +99,11 @@ table.mat-elevation-z8 {
   gap:20px;
 }
 
+.clickable {
+  cursor: pointer;
+}
+.clickable span {
+  margin-left: 5px;
+  font-size: 12px;
+  vertical-align: middle;
+}

@@ -57,8 +57,13 @@ export class ServiceDisplaySellerService {
   }
 
 
-  async FuncDisplay():Promise<InterDisplaySeller[] | undefined>{
-    return await this.request.get("api/seller/");
+  async FuncDisplay(ordering:string | null):Promise<InterDisplaySeller[] | undefined>{
+    if(ordering){
+      return await this.request.get(`api/seller/?ordering=${ordering}`);
+    }else{
+      return await this.request.get("api/seller/");
+    }
+
   }
 
   async getAllUserStat():Promise<AllUserStatInterface[] | undefined>{
