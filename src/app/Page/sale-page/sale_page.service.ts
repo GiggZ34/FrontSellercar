@@ -1,35 +1,43 @@
 import {Injectable, OnInit} from '@angular/core';
 import {ApiManagementService} from "../../Services/api-management.service";
 
+export interface AllSalePagination <T>{
+  count: number;
+  total_pages: number;
+  next:string | null;
+  previous:string |null;
+  results: T[];
+}
+
 export interface AllSale {
-  id: number,
-  seller: {
     id: number,
-    roles: string,
-    first_name: string,
-    last_name: string,
-    username: string,
-    concession: number,
-  },
-  carmodel: {
-    model: string,
-    price: number
-  },
-  customer: {
-    id:number,
-    first_name: string,
-    last_name: string,
-    birthday: string,
-  },
-  options: [
-    {
-      model: number | null,
-      title: string,
-      price: number,
-    }
-  ]
-  total_price:number,
-  total_options_price:number
+    seller: {
+      id: number,
+      roles: string,
+      first_name: string,
+      last_name: string,
+      username: string,
+      concession: number,
+    },
+    carmodel: {
+      model: string,
+      price: number
+    },
+    customer: {
+      id:number,
+      first_name: string,
+      last_name: string,
+      birthday: string,
+    },
+    options: [
+      {
+        model: number | null,
+        title: string,
+        price: number,
+      }
+    ]
+    total_price:number,
+    total_options_price:number
 }
 
 export interface UserStatInterface {
@@ -98,7 +106,7 @@ export class Sale_pageService {
     this.request.setToken(this.token)
   }
 
-  async getSale(sortCriteria: SortCriteriaInterface): Promise<AllSale[] | undefined> {
+  async getSale(sortCriteria: SortCriteriaInterface, actualPage:number, seller_id:number | null, customer_id:number | null): Promise<AllSalePagination<AllSale> | undefined> {
     let orderingParams = [];
 
     for (const [key, value] of Object.entries(sortCriteria)) {
@@ -111,8 +119,15 @@ export class Sale_pageService {
       }
     }
 
-    const orderingQuery = orderingParams.length > 0 ? `?ordering=${orderingParams.join(',')}` : '';
-    return await this.request.get(`api/relation_sells/${orderingQuery}`);
+    const orderingQuery = orderingParams.length > 0 ? `&ordering=${orderingParams.join(',')}` : '';
+
+    if(seller_id){
+      return await this.request.get(`api/relation_sells/?page=${actualPage}${orderingQuery}&seller_id=${seller_id}`);
+    }else if(customer_id){
+      return await this.request.get(`api/relation_sells/?page=${actualPage}${orderingQuery}&customer_id=${customer_id}`);
+    }else{
+      return await this.request.get(`api/relation_sells/?page=${actualPage}${orderingQuery}`);
+    }
   }
 
   async getUserStat(userId: number | null):Promise<UserStatInterface | undefined>{

@@ -21,6 +21,7 @@ export class ServiceNewSellService {
   }
 
   async FuncAddCars(body:InterNewSell):Promise<InterNewSell>{
+
     return await this.request.post("api/relation_sells/",body);}
 
   async  FuncCarModels():Promise<InterCarmodels[] | undefined>{

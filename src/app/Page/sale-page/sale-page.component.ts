@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {
-  AllSale,
+  AllSale, AllSalePagination,
   PieChartOptions,
   Sale_pageService, SortCriteriaInterface,
   StackedColumnChartOptions,
@@ -12,6 +12,7 @@ import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 import {MatButton} from "@angular/material/button";
 import {CheckConnexionService} from "../../Services/check-connexion.service";
 import {FormsModule} from "@angular/forms";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-sale-page',
@@ -20,7 +21,8 @@ import {FormsModule} from "@angular/forms";
     SaleCardComponent,
     CanvasJSAngularChartsModule,
     MatButton,
-    FormsModule
+    FormsModule,
+    NgClass
   ],
   templateUrl: './sale-page.component.html',
   styleUrl: './sale-page.component.scss'
@@ -32,7 +34,17 @@ export class SalePageComponent implements OnInit {
               private route: ActivatedRoute,
               private connexion : CheckConnexionService ) {}
 
-  public allSale : AllSale[] = [];
+  public allSale: AllSalePagination<AllSale> = {
+    count: 0,
+    total_pages:0,
+    next: null,
+    previous: null,
+    results: []
+  };
+
+  public actualPage:number = 1;
+  public totalPages: number[] = Array(2);
+
   public sellerId: number | null = null;
   public customerId: number | null = null;
 
@@ -97,44 +109,26 @@ export class SalePageComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.sellerId = parseInt(<string>params.get('seller_id')) ;
       this.customerId = parseInt(<string>params.get('customer_id'));
-      this.getSale(this.sellerId, this.customerId);
+      this.getSale();
     });
     this.connexion.checkConnexion()
-
-
-
   }
 
-  getSale(sellerFirstName: number | null, customerFirstName: number | null) {
-    this.functionService.getSale(this.sortCriteria).then((data:AllSale[] | undefined)=>{
+  getSale() {
+    this.functionService.getSale(this.sortCriteria, this.actualPage, this.sellerId, this.customerId).then((data:AllSalePagination<AllSale>  | undefined)=>{
+      console.log(data)
       if(data){
-        if(sellerFirstName && !customerFirstName){
-
+        this.allSale = data;
+        this.totalPages = Array.from({ length: data.total_pages }, (_, i) => i + 1);
+        if(this.sellerId){
           this.getUserStat()
-
-          data.map((item:AllSale) =>{
-            if(item.seller.id === sellerFirstName){
-              this.allSale.push(item);
-            }
-          })
-
-        }else if (customerFirstName && !sellerFirstName){
-
-          data.map((item:AllSale) =>{
-            if(item.customer.id === customerFirstName){
-              this.allSale.push(item);
-            }
-          })
-        }else{
-          this.allSale =data;
         }
-
       }
 
     })
       .catch((error)=>{
-        console.log(error)
-      })
+        console.log('Erreur',error)
+      });
   }
 
   getUserStat(){
@@ -149,9 +143,6 @@ export class SalePageComponent implements OnInit {
   setGraph(sellerData : UserStatInterface | undefined){
 
     if(sellerData){
-
-
-
       this.stackedChartOptions = {
         title: { text: "Number of Options and Cars Sold" },
         animationEnabled: true,
@@ -182,7 +173,7 @@ export class SalePageComponent implements OnInit {
         data: [{
           type: "pie",
           dataPoints: [
-            { label: `${this.allSale[0].seller.first_name} ${this.allSale[0].seller.last_name} Sales`,
+            { label: `${this.allSale.results[0].seller.first_name} ${this.allSale.results[0].seller.last_name} Sales`,
               y: sellerData.percent_sales_concession },
             { label: "Total Concession Sales", y: 100 - sellerData.percent_sales_concession }
           ]
@@ -195,7 +186,7 @@ export class SalePageComponent implements OnInit {
         data: [{
           type: "pie",
           dataPoints: [
-            { label: `${this.allSale[0].seller.first_name} ${this.allSale[0].seller.last_name} Sales`,
+            { label: `${this.allSale.results[0].seller.first_name} ${this.allSale.results[0].seller.last_name} Sales`,
               y: sellerData.percent_sales_total },
             { label: "Total Sales", y: 100 - sellerData.percent_sales_total }
           ]
@@ -208,41 +199,10 @@ export class SalePageComponent implements OnInit {
     this.router.navigate(['accueil']);
   }
 
-   applyFilter() {
-
-     this.functionService.getSale(this.sortCriteria).then((data:AllSale[] | undefined)=>{
-
-       if(!data){
-         return
-       }
-
-       this.allSale = [];
-
-       if(this.sellerId && !this.customerId){
-
-         this.getUserStat()
-
-         data.map((item:AllSale) =>{
-           if(item.seller.id === this.sellerId){
-             this.allSale.push(item);
-           }
-         })
-
-       }else if (this.customerId && !this.sellerId){
-
-         data.map((item:AllSale) =>{
-           if(item.customer.id === this.customerId){
-             this.allSale.push(item);
-           }
-         })
-       }else{
-         this.allSale =data;
-       }
-
-     })
-       .catch((error)=>{
-         console.log('Erreur',error)
-       });
+  goToPage(page: number) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.actualPage = page;
+    this.getSale()
   }
 
 }

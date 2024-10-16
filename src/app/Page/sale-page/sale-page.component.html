@@ -3,13 +3,13 @@
 
 
 
-  @if(allSale[0]){
+  @if(allSale.results[0]){
     @if(!sellerId && !customerId){
       <h1 class="title_allSale">ALL SALE</h1>
     } @else if (sellerId && !customerId){
-      <h1 class="title_allSale">SOLD BY : {{allSale[0].seller.first_name}} {{allSale[0].seller.last_name}}</h1>
+      <h1 class="title_allSale">SOLD BY : {{allSale.results[0].seller.first_name}} {{allSale.results[0].seller.last_name}}</h1>
     }@else if (customerId && !sellerId){
-      <h1 class="title_allSale">PURCHASE OF : {{allSale[0].customer.first_name}} {{allSale[0].customer.last_name}}</h1>
+      <h1 class="title_allSale">PURCHASE OF : {{allSale.results[0].customer.first_name}} {{allSale.results[0].customer.last_name}}</h1>
     }
 
 
@@ -36,7 +36,7 @@
       <div class="block_choice">
         <div class="filter-item">
           <label for="total-price-sort">Total Price :</label>
-          <select id="total-price-sort" [(ngModel)]="sortCriteria.total_price" (change)="applyFilter()">
+          <select id="total-price-sort" [(ngModel)]="sortCriteria.total_price" (change)="getSale()">
             <option [ngValue]="null">None</option>
             <option value="">Ascending</option>
             <option value="-">Descending</option>
@@ -45,7 +45,7 @@
 
         <div class="filter-item">
           <label for="options-price-sort">Options Price :</label>
-          <select id="options-price-sort" [(ngModel)]="sortCriteria.total_options_price" (change)="applyFilter()">
+          <select id="options-price-sort" [(ngModel)]="sortCriteria.total_options_price" (change)="getSale()">
             <option [ngValue]="null">None</option>
             <option value="">Ascending</option>
             <option value="-">Descending</option>
@@ -54,7 +54,7 @@
 
         <div class="filter-item">
           <label for="sale-number-sort">Sale Number :</label>
-          <select id="sale-number-sort" [(ngModel)]="sortCriteria.id" (change)="applyFilter()">
+          <select id="sale-number-sort" [(ngModel)]="sortCriteria.id" (change)="getSale()">
             <option [ngValue]="null">None</option>
             <option value="">Ascending</option>
             <option value="-">Descending</option>
@@ -63,7 +63,7 @@
 
         <div class="filter-item">
           <label for="client-name-sort">Customer Name :</label>
-          <select id="client-name-sort" [(ngModel)]="sortCriteria.customer__first_name" (change)="applyFilter()">
+          <select id="client-name-sort" [(ngModel)]="sortCriteria.customer__first_name" (change)="getSale()">
             <option [ngValue]="null">None</option>
             <option value="">Ascending</option>
             <option value="-">Descending</option>
@@ -72,7 +72,7 @@
 
         <div class="filter-item">
           <label for="seller-name-sort">Seller Name :</label>
-          <select id="seller-name-sort" [(ngModel)]="sortCriteria.seller__first_name" (change)="applyFilter()">
+          <select id="seller-name-sort" [(ngModel)]="sortCriteria.seller__first_name" (change)="getSale()">
             <option [ngValue]="null">None</option>
             <option value="">Ascending</option>
             <option value="-">Descending</option>
@@ -82,12 +82,51 @@
     </div>
 
     <div class="block-sale">
-      @for (item of allSale; track item.id){
+      @for (item of allSale.results; track item.id){
         <app-sale-card class="sale-card" [sale]="item"></app-sale-card>
       }
     </div>
 
-    <button mat-stroked-button class="button_retour" (click)="Return()">retour</button>
+    <!--PAGINATION BUTTON-->
+
+
+    <div class="pagination:container">
+
+      @if(actualPage > 1){
+        <div class="pagination:number arrow" (click)="goToPage(actualPage-1)">
+          <svg width="18" height="18">
+            <use xlink:href="#left" />
+          </svg>
+          <span class="arrow:text">Previous</span>
+        </div>
+      }
+
+      @for(page of totalPages; track $index) {
+        <div (click)="goToPage(page)"
+             [ngClass]="{'pagination-active': page === actualPage, 'pagination:number': true}">
+          {{page}}
+        </div>
+
+      }
+
+      @if(actualPage < totalPages.length){
+        <div class="pagination:number arrow" (click)="goToPage(actualPage+1)">
+          <span class="arrow:text">Next</span>
+          <svg width="18" height="18">
+            <use xlink:href="#right" />
+          </svg>
+
+        </div>
+      }
+
+    </div>
+
+    <svg class="hide">
+      <symbol id="left" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></symbol>
+      <symbol id="right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></symbol>
+    </svg>
+
+    <button mat-stroked-button class="button_retour" (click)="Return()">BACK</button>
 
   } @else {
     <h1>NO PURCHASE</h1>

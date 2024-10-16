@@ -24,7 +24,7 @@
 
 .button_retour{
   margin-top: 10px;
-  background-color: #03dac6;
+  background-color: #8d7bfa;
   width: 100%;
 }
 
@@ -83,4 +83,89 @@
   padding: 6px;
   border-radius: 4px;
   border: 1px solid #ccc;
+}
+
+
+
+* {
+  font-family: "Inter var", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  user-select: none;
+  transition: all 200ms ease;
+}
+
+html,
+body,
+.full-width {
+  height: 100%;
+}
+
+body {
+
+  &,
+  html {
+    margin: 0;
+    padding: 0;
+  }
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background:var(--bg-page);
+  color:var(--text-color);
+}
+
+.hide {
+  display: none;
+  visibility: hidden;
+  height: 0;
+}
+
+.pagination\:container {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.arrow\:text {
+  display: block;
+  vertical-align: middle;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.pagination\:number {
+  color:white;
+  --size: 32px;
+  --margin: 6px;
+  margin: 0 var(--margin);
+  border-radius: 6px;
+  background: rgba(108, 99, 172, 0.71);
+  max-width: auto;
+  min-width: var(--size);
+  height: var(--size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 6px;
+  @media (hover: hover) {
+    &:hover {
+      background: #5c5391;
+    }
+  }
+  &:active {
+    background:  #5c5391;
+  }
+}
+
+.pagination\:active {
+  background: lighten(#202020, 3%);
+  position: relative;
+}
+
+.pagination-active{
+  background:  #6C63AC;
 }
