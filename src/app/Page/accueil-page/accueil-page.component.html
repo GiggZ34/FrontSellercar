@@ -85,7 +85,7 @@
             <p>Cars Sold : {{ generalStat.top_seller.number }}</p>
           </div>
 
-          <div class="stat-card total-sale-price">
+          <div class="stat-card total-sale-price" (click)="redirectToSale()">
             <h2>Total Sale In All Concession 💹</h2>
             <p class="text_price">{{ generalStat.total_sale_price }}$</p>
           </div>

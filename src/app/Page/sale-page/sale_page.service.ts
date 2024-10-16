@@ -1,33 +1,43 @@
 import {Injectable, OnInit} from '@angular/core';
 import {ApiManagementService} from "../../Services/api-management.service";
 
+export interface AllSalePagination <T>{
+  count: number;
+  total_pages: number;
+  next:string | null;
+  previous:string |null;
+  results: T[];
+}
+
 export interface AllSale {
-  id: number,
-  seller: {
     id: number,
-    roles: string,
-    first_name: string,
-    last_name: string,
-    username: string,
-    concession: number,
-  },
-  carmodel: {
-    model: string,
-    price: number
-  },
-  customer: {
-    id:number,
-    first_name: string,
-    last_name: string,
-    birthday: string,
-  },
-  options: [
-    {
-      model: number | null,
-      title: string,
-      price: number,
-    }
-  ]
+    seller: {
+      id: number,
+      roles: string,
+      first_name: string,
+      last_name: string,
+      username: string,
+      concession: number,
+    },
+    carmodel: {
+      model: string,
+      price: number
+    },
+    customer: {
+      id:number,
+      first_name: string,
+      last_name: string,
+      birthday: string,
+    },
+    options: [
+      {
+        model: number | null,
+        title: string,
+        price: number,
+      }
+    ]
+    total_price:number,
+    total_options_price:number
 }
 
 export interface UserStatInterface {
@@ -53,6 +63,14 @@ export interface PieChartOptions {
       y: number;
     }>;
   }>;
+}
+
+export interface SortCriteriaInterface {
+  total_price: string | null,
+  total_options_price: string | null,
+  id: string | null,
+  customer__first_name: string | null,
+  seller__first_name: string | null
 }
 
 export interface StackedColumnChartOptions {
@@ -88,8 +106,28 @@ export class Sale_pageService {
     this.request.setToken(this.token)
   }
 
-  async getSale():Promise<AllSale[] | undefined>{
-      return await this.request.get(`api/relation_sells/`)
+  async getSale(sortCriteria: SortCriteriaInterface, actualPage:number, seller_id:number | null, customer_id:number | null): Promise<AllSalePagination<AllSale> | undefined> {
+    let orderingParams = [];
+
+    for (const [key, value] of Object.entries(sortCriteria)) {
+      if (value === '') {
+        // Tri croissant
+        orderingParams.push(key);
+      } else if (value === '-') {
+        // Tri décroissant
+        orderingParams.push(`-${key}`);
+      }
+    }
+
+    const orderingQuery = orderingParams.length > 0 ? `&ordering=${orderingParams.join(',')}` : '';
+
+    if(seller_id){
+      return await this.request.get(`api/relation_sells/?page=${actualPage}${orderingQuery}&seller_id=${seller_id}`);
+    }else if(customer_id){
+      return await this.request.get(`api/relation_sells/?page=${actualPage}${orderingQuery}&customer_id=${customer_id}`);
+    }else{
+      return await this.request.get(`api/relation_sells/?page=${actualPage}${orderingQuery}`);
+    }
   }
 
   async getUserStat(userId: number | null):Promise<UserStatInterface | undefined>{
